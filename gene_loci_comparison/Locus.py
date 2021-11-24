@@ -152,7 +152,7 @@ class Locus:
             else:
                 viewspan = (self.gene_location - viewspan, self.gene_location + viewspan)
 
-        bokeh = self.graphic_record.plot_bokeh(figure_width=figure_width, figure_height=figure_height)
+        bokeh = self.graphic_record.plot_with_bokeh(figure_width=figure_width, figure_height=figure_height)
 
         # autoscale plot
         bokeh.sizing_mode = 'scale_width'
