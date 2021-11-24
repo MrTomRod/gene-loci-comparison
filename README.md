@@ -1,31 +1,34 @@
 # Gene Loci Comparison
+
 Create fancy (bokeh) gene locus plots from GenBank files!
 
 This repository extends the functionality of the excellent [DnaFeaturesViewer](https://edinburgh-genome-foundry.github.io/DnaFeaturesViewer/)
 
 ## Setup
-```shell script
-pip install dna_features_viewer biopython bokeh matplotlib numpy pandas
+
+```shell
+pip install git+https://github.com/MrTomRod/gene_loci_comparison.git
 ```
 
 ## Examples
-### Bokeh
-GraphicRecordLocus can also create interactive html/javascript-based plots.
-Open these files in your browser:
-  - [single locus](output/test_plot_single_locus_pgap.html)
-  - [multiple loci with synchronized panning](output/test_multiple_bokeh.html)
 
+### Bokeh
+
+This library can also create interactive html/javascript-based plots. Open these files in your browser:
+
+- [single locus](tests/output/locus/test_single_locus_pgap.html)
+- [multiple loci with synchronized panning](tests/output/loci/test_multiple_bokeh.html)
 
 ### Single locus, specify colors
 
 ```python
-from gene_loci_comparison import Locus
+from gene_loci_comparison import Locus, Loci
 import matplotlib
 import matplotlib.pyplot as plt
 
 matplotlib.rcParams['font.family'] = "PT Sans Narrow"
 
-graphic_record = Locus(gbk_file='/path/to/file.gbk', locus_tag='FAM3257_001019')
+locus = Locus(gbk_file='/path/to/file.gbk', locus_tag='FAM3257_001019')
 
 locus_to_color = dict(
     FAM3257_001014='#1271c3',
@@ -39,19 +42,19 @@ locus_to_color = dict(
     # FAM3257_001021='#fd71c3'  # last gene: white (default color)
 )
 
-graphic_record.colorize(locus_to_color)
+locus.colorize(locus_to_color)
 
-ax, _ = graphic_record.plot(figure_width=12)
+ax, _ = locus.plot(figure_width=12)
 
 plt.show()
 ```
-![](output/test_custom_colors.svg)
 
+![](tests/output/locus/test_custom_colors.svg)
 
 ### Multiple loci
 
 ```python
-from gene_loci_comparison import Locus
+from gene_loci_comparison import Loci
 import matplotlib
 
 matplotlib.rcParams['font.family'] = "PT Sans Narrow"
@@ -66,34 +69,35 @@ loci_of_interest = [
 # Highlight selected genes
 locus_to_color_dict = {locus['gene']: '#1984ff' for locus in loci_of_interest}
 
-# Create multiple graphic records
-graphic_records = Locus.get_multiple(
+# Generate loci object
+loci = Loci.generate(
     loci_of_interest,
     locus_to_color_dict=locus_to_color_dict
 )
 
-plot = Locus.plot_multiple(graphic_records, auto_reverse=False)
+plot = loci.plot(auto_reverse=False)
 
 plot.show()
 ```
-![](output/test_multiple.svg)
 
+![](tests/output/loci/test_multiple.svg)
 
 ### Multiple loci, autoreversed
-GraphicRecordLocus can automatically reverse loci based on the direction of the selected genes.
-Simply set `auto_reverse` to `True`.
-![](output/test_multiple_auto_reverse.svg)
 
+To automatically reverse loci based on the direction of the selected genes. Simply set `auto_reverse` to `True`.
+
+![](tests/output/loci/test_multiple_auto_reverse.svg)
 
 ### Multiple loci, with GC content
+
 Change plotting method from `plot_multiple` to `plot_multiple_gc`.
 
 ```python
-plot = GraphicRecordLocus.plot_gc(
-    graphic_records,
+plot = loci.plot_gc(
     auto_reverse=True,
     window_bp=200
 )
 
 ```
-![](output/test_multiple_auto_reverse_gc.svg)
+
+![](tests/output/loci/test_multiple_auto_reverse_gc.svg)
