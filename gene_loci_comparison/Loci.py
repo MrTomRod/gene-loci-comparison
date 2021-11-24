@@ -130,8 +130,8 @@ class Loci:
         plots = []
         for current_record in self.loci:
             current_record: Locus
-            p_curr = current_record.plot_with_bokeh(figure_width=figure_width, figure_height=single_figure_height,
-                                                    viewspan=viewspan, auto_reverse=auto_reverse)
+            p_curr = current_record.plot_bokeh(figure_width=figure_width, figure_height=single_figure_height,
+                                               viewspan=viewspan, auto_reverse=auto_reverse)
             # tags: [gene_location, is_backward]
             p_curr.tags = [current_record.gene_location, current_record.is_backward]
 

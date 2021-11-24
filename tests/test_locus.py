@@ -197,7 +197,7 @@ class TestLocus(TestCase):
 
         locus = Locus(gbk_file=pgap_file, locus_tag=locus_tag, span=10000)
 
-        bokeh = locus.plot_with_bokeh(figure_width=12, figure_height='auto', viewspan=3000)
+        bokeh = locus.plot_bokeh(figure_width=12, figure_height='auto', viewspan=3000)
 
         if save_plots:
             output_file(filename='tests/output/locus/test_single_locus_pgap.html', )

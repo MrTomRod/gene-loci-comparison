@@ -142,8 +142,8 @@ class Locus:
 
         return ax1, ax2
 
-    def plot_with_bokeh(self, figure_width=12, figure_height='auto', viewspan=None, auto_reverse=True,
-                        x_range=None):
+    def plot_bokeh(self, figure_width=12, figure_height='auto', viewspan=None, auto_reverse=True,
+                   x_range=None):
         if not viewspan:
             viewspan = self.crop_window
         else:
@@ -152,7 +152,7 @@ class Locus:
             else:
                 viewspan = (self.gene_location - viewspan, self.gene_location + viewspan)
 
-        bokeh = self.graphic_record.plot_with_bokeh(figure_width=figure_width, figure_height=figure_height)
+        bokeh = self.graphic_record.plot_bokeh(figure_width=figure_width, figure_height=figure_height)
 
         # autoscale plot
         bokeh.sizing_mode = 'scale_width'
