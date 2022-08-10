@@ -14,8 +14,8 @@ def get_scaffold_and_geneposition(gbk_file, locus) -> (SeqRecord, int):
         for scf in SeqIO.parse(input_handle, "genbank"):
             for f in scf.features:
                 if f.type in ["gene", "CDS"] and "locus_tag" in f.qualifiers and f.qualifiers['locus_tag'][0] == locus:
-                    f_start = f.location.start
-                    f_end = f.location.end
+                    location = f.location if f.location_operator != 'join' else f.location.parts[0]
+                    f_start, f_end = location.start, location.end
                     gene_location = f_start + (f_end - f_start) // 2
                     return (scf, gene_location)
     raise KeyError(F'Gene {locus} was not found in file {gbk_file}')
